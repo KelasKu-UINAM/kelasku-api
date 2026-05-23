@@ -9,7 +9,7 @@ const startServer = async () => {
   try {
     await testConnection();
 
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`KelasKu UINAM API running on port ${PORT}`);
     });
   } catch (error) {
