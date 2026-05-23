@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express');
 
 const authRoutes = require('./routes/auth.routes');
 const classRoutes = require('./routes/class.routes');
@@ -15,10 +16,22 @@ const whatsappRoutes = require('./routes/whatsapp.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
 const errorMiddleware = require('./middlewares/error.middleware');
 const { successResponse, errorResponse } = require('./utils/response');
+const swaggerDocument = require('./docs/swagger');
 
 const app = express();
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:']
+      }
+    }
+  })
+);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,6 +50,17 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
   successResponse(res, 'Healthy', { uptime: process.uptime() });
 });
+
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, {
+    customSiteTitle: 'KelasKu UINAM API Docs',
+    swaggerOptions: {
+      persistAuthorization: true
+    }
+  })
+);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/classes', classRoutes);

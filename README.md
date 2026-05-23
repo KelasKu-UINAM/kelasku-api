@@ -91,6 +91,20 @@ Base URL lokal:
 http://localhost:3000
 ```
 
+Swagger UI:
+
+```text
+http://localhost:3000/api-docs
+```
+
+Di Swagger UI, klik `Authorize`, lalu isi JWT token dari response login. Karena schema memakai HTTP Bearer Auth, cukup tempel tokennya saja tanpa teks `Bearer`.
+
+```text
+<token>
+```
+
+Setelah itu setiap endpoint protected bisa dites langsung dengan `Try it out` dan `Execute`.
+
 ## Menjalankan Database
 
 Jalankan schema:
@@ -152,6 +166,10 @@ Authorization: Bearer <token>
 ```
 
 ## Endpoint
+
+Dokumentasi interaktif tersedia di:
+
+- `GET /api-docs`
 
 Auth:
 
