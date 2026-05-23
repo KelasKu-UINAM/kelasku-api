@@ -1,6 +1,6 @@
 {
   "name": "kelasku-uinam-backend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Express REST API backend for KelasKu UINAM mobile app.",
   "main": "server.js",
   "scripts": {

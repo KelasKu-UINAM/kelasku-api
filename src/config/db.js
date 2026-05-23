@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 
-const databaseUrl = process.env.DATABASE_URL;
+const databaseUrl = process.env.LOCAL_DATABASE_URL || process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL;
 
 if (!databaseUrl) {
   console.warn('DATABASE_URL is not set. Set it in .env before running the API.');

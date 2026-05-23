@@ -60,12 +60,16 @@ Isi `.env`:
 ```env
 PORT=3000
 DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@YOUR_HOST:YOUR_PORT/railway
+# Optional untuk local development jika DATABASE_URL memakai *.railway.internal
+# LOCAL_DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@YOUR_PUBLIC_HOST:YOUR_PUBLIC_PORT/railway
 JWT_SECRET=your_super_secret_key
 JWT_EXPIRES_IN=7d
 NODE_ENV=development
 ```
 
 `DATABASE_URL` hanya disimpan di `.env`. Jangan hardcode credential database di source code.
+
+Jika menjalankan server dari laptop dan `DATABASE_URL` berisi host seperti `postgres.railway.internal`, koneksi akan gagal karena domain `railway.internal` hanya tersedia di private network Railway. Untuk local development, gunakan public TCP Proxy/Postgres public connection string dari Railway dan simpan di `LOCAL_DATABASE_URL`. Saat deploy backend ke Railway, gunakan `DATABASE_URL` internal seperti biasa.
 
 ## Menjalankan Server
 
@@ -224,6 +228,7 @@ Dashboard:
 ## Catatan Railway PostgreSQL
 
 - Gunakan `DATABASE_URL` dari Railway PostgreSQL.
+- Untuk local development, gunakan URL publik/TCP Proxy di `LOCAL_DATABASE_URL` jika `DATABASE_URL` memakai `*.railway.internal`.
 - Koneksi memakai `pg.Pool`.
 - SSL akan aktif otomatis saat `NODE_ENV=production` atau URL database terdeteksi sebagai URL Railway.
 - Semua query di service memakai parameterized query untuk mengurangi risiko SQL injection.
